@@ -1,0 +1,6 @@
+faker
+google-cloud-pubsub
+apache-beam[gcp]
+google-cloud-bigquery
+dbt-bigquery
+python-dotenv

@@ -1,0 +1,57 @@
+version: 2
+
+models:
+  - name: fact_sales
+    description: "Fact table containing all sales events enriched with EUR conversion"
+    columns:
+      - name: event_id
+        description: "Unique event identifier"
+        tests:
+          - not_null
+          - unique
+
+      - name: event_timestamp
+        description: "Timestamp of the sales event"
+        tests:
+          - not_null
+          - no_future_dates  
+
+      - name: sale_id
+        tests:
+          - not_null
+
+      - name: store_id
+        tests:
+          - not_null
+
+      - name: customer_id
+        tests:
+          - not_null
+
+      - name: product_id
+        tests:
+          - not_null
+
+      - name: payment_method
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['card', 'cash', 'paypal', 'apple_pay', 'google_pay']
+
+      - name: currency
+        tests:
+          - not_null
+
+      - name: quantity
+        tests:
+          - not_null
+          - quantity_positive  
+
+      - name: unit_price
+        tests:
+          - not_null
+          - unit_price_positive  
+
+      - name: country
+        tests:
+          - valid_country_code  

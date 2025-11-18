@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: bronze_sales
+    database: sales-analytics-478517
+    schema: sales_bronze
+    tables:
+      - name: sales_events

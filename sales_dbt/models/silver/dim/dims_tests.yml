@@ -1,0 +1,83 @@
+version: 2
+
+models:
+
+  # ---------------------------
+  # DIM CUSTOMER
+  # ---------------------------
+  - name: dim_customer
+    description: "Dimension des clients"
+    columns:
+      - name: customer_id
+        description: "Identifiant unique du client"
+        tests:
+          - not_null
+          - unique
+
+      - name: loyalty_level
+        description: "Niveau de fidélité du client"
+        tests:
+          - accepted_values:
+              values: ['BRONZE', 'SILVER', 'GOLD', 'PLATINUM']
+
+      - name: age
+        description: "Âge du client"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "age > 0"
+
+      - name: country
+        description: "Pays du client"
+        tests:
+          - not_null
+
+
+  # ---------------------------
+  # DIM PRODUCT
+  # ---------------------------
+  - name: dim_product
+    description: "Dimension des produits"
+    columns:
+      - name: product_id
+        description: "ID produit"
+        tests:
+          - not_null
+          - unique
+
+      - name: product_name
+        description: "Nom du produit"
+        tests:
+          - not_null
+
+      - name: category
+        description: "Catégorie du produit"
+        tests:
+          - accepted_values:
+              values: ['Electronics', 'Clothing', 'Sports', 'Food']
+
+      - name: unit_price
+        description: "Prix unitaire"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "unit_price > 0"
+
+
+  # ---------------------------
+  # DIM STORE
+  # ---------------------------
+  - name: dim_store
+    description: "Dimension des magasins"
+    columns:
+      - name: store_id
+        description: "ID du magasin"
+        tests:
+          - not_null
+          - unique
+
+      - name: channel
+        description: "Type de canal de vente"
+        tests:
+          - accepted_values:
+              values: ['ONLINE', 'STORE']
